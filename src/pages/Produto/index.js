@@ -7,9 +7,9 @@ import Modal from "../../components/Modal";
 import Button from "../../styles/components/button";
 import { api } from "../../services/api";
 
-import { Container, Pessoa, ButtonIcon } from "./styles";
+import { Container, Produto, ButtonIcon } from "./styles";
 
-export default function Users() {
+export default function Produtos() {
   const [produtos, setProdutos] = useState();
   const [produto, setProduto] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,28 +37,28 @@ export default function Users() {
       descricao: newProduto,
       valor: newValor
     });
-    toast.success("Pesosa criada com sucesso!");
+    toast.success("Produto criada com sucesso!");
     getProdutos();
     setNewValor('');
     setNewProduto('');
   }
 
-  function removePessoa(id) {
+  function removeProduto(id) {
     const usersFilter = produtos.filter(value => {
       return value.rowIndex !== id;
     });
     setProdutos(usersFilter);
   }
   function handleDelete(rowIndex) {
-    removePessoa(rowIndex);
-    toast.success("Pessoa removida com sucesso!");
+    removeProduto(rowIndex);
+    toast.success("Produto removida com sucesso!");
     api.delete(`${type}/${rowIndex}?spreadsheetId=${idApi}`);
   }
 
-  function handleEdit({ rowIndex, nome, email }) {
-    setProduto(nome);
+  function handleEdit({ rowIndex, descricao, valor}) {
+    setProduto(descricao);
     setId(rowIndex);
-    setValor(email);
+    setValor(valor);
     setIsModalOpen(true);
   }
   async function handleSendEdit(){
@@ -66,7 +66,7 @@ export default function Users() {
       descricao: produto,
       valor: valor
     });
-    toast.success("Pessoa alterada com sucesso!");
+    toast.success("Produto alterada com sucesso!");
     setIsModalOpen(!isModalOpen);
     getProdutos();
   } 
@@ -94,18 +94,18 @@ export default function Users() {
         <ul>
           {produtos &&
             produtos.map((produto, key) => (
-              <Pessoa key={key}>
+              <Produto key={key}>
                 <strong>{produto.descricao}</strong>
                 <strong>{produto.valor}</strong>
                 <strong>
                   <ButtonIcon>
-                    <MdModeEdit size={20} onClick={() => handleEdit(valor)} />
+                    <MdModeEdit size={20} onClick={() => handleEdit(produto)} />
                   </ButtonIcon>
                   <ButtonIcon>
                     <MdDelete size={20} onClick={() => handleDelete(produto.rowIndex)} />
                   </ButtonIcon>
                 </strong>
-              </Pessoa>
+              </Produto>
             ))}
         </ul>
           {isModalOpen && (
