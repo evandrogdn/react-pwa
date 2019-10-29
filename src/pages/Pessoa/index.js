@@ -17,8 +17,8 @@ export default function Users() {
   const [newPessoa, setNewPessoa] = useState();
   const [newEmail, setNewEmail] = useState();
   const [email, setEmail] = useState();
-  const idApi = "";
-  const type = "";
+  const idApi = "136dQL3_-dggsQHFvnwYWuaNbAxpH1tB6j9LJ0WLFcTg";
+  const type = "api";
 
   async function getPessoas() {
     const response = await api.get(`${type}?spreadsheetId=${idApi}`);

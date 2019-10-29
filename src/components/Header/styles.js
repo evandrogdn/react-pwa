@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    background: #333;
+    background: #e60000;
     padding: 0 30px;
 `;
 export const Content = styled.div`
     height: 64px;
-    /* max-width: 900px; */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
