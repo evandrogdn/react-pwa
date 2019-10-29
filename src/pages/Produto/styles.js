@@ -30,7 +30,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Pessoa = styled.li`
+export const Produto = styled.li`
   padding: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
