@@ -10,44 +10,44 @@ import { api } from "../../services/api";
 import { Container, Pessoa, ButtonIcon } from "./styles";
 
 export default function Users() {
-  const [pessoas, setPessoas] = useState();
-  const [pessoa, setPessoa] = useState();
+  const [produtos, setProdutos] = useState();
+  const [produto, setProduto] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [id, setId] = useState();
-  const [newPessoa, setNewPessoa] = useState();
-  const [newEmail, setNewEmail] = useState();
+  const [newProduto, setNewProduto] = useState();
+  const [newValor, setNewValor] = useState();
   const [email, setEmail] = useState();
   const idApi = "136dQL3_-dggsQHFvnwYWuaNbAxpH1tB6j9LJ0WLFcTg";
   const type = "api";
 
-  async function getPessoas() {
+  async function getProdutos() {
     const response = await api.get(`${type}?spreadsheetId=${idApi}`);
     const { results } = response.data;
     if (results) {
-      setPessoas(results);
+      setProdutos(results);
     }
   }
   useEffect(() => {
-    getPessoas();
+    getProdutos();
   }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
     await api.post(`${type}?spreadsheetId=${idApi}`, {
-      nome: newPessoa,
-      email: newEmail
+      nome: newProduto,
+      valor: newValor
     });
     toast.success("Pesosa criada com sucesso!");
-    getPessoas();
-    setNewEmail('');
-    setNewPessoa('');
+    getProdutos();
+    setNewValor('');
+    setNewProduto('');
   }
 
   function removePessoa(id) {
-    const usersFilter = pessoas.filter(value => {
+    const usersFilter = produtos.filter(value => {
       return value.rowIndex !== id;
     });
-    setPessoas(usersFilter);
+    setProdutos(usersFilter);
   }
   function handleDelete(rowIndex) {
     removePessoa(rowIndex);
@@ -56,19 +56,19 @@ export default function Users() {
   }
 
   function handleEdit({ rowIndex, nome, email }) {
-    setPessoa(nome);
+    setProduto(nome);
     setId(rowIndex);
     setEmail(email);
     setIsModalOpen(true);
   }
   async function handleSendEdit(){
     await api.put(`${type}/${id}?spreadsheetId=${idApi}`, {
-      nome: pessoa,
+      nome: produto,
       email: email
     });
     toast.success("Pessoa alterada com sucesso!");
     setIsModalOpen(!isModalOpen);
-    getPessoas();
+    getProdutos();
   } 
   function handleModal(){
     setIsModalOpen(!isModalOpen);
@@ -80,21 +80,21 @@ export default function Users() {
       <Container>
         <form>
           <input
-            value={newPessoa}
-            placeholder="example..."
-            onChange={e => setNewPessoa(e.target.value)}
+            value={newProduto}
+            placeholder="Descricao..."
+            onChange={e => setNewProduto(e.target.value)}
           />
           <input
-            value={newEmail}
+            value={newValor}
             type="email"
-            onChange={e => setNewEmail(e.target.value)}
+            onChange={e => setNewValor(e.target.value)}
             placeholder="email@example.com"
           />
           <button onClick={ e => handleSubmit(e)}>Salvar</button>
         </form>
         <ul>
-          {pessoas &&
-            pessoas.map((pessoa, key) => (
+          {produtos &&
+            produtos.map((pessoa, key) => (
               <Pessoa key={key}>
                 <strong>{pessoa.nome}</strong>
                 <strong>{pessoa.email}</strong>
@@ -114,11 +114,11 @@ export default function Users() {
             <Modal size="big">
               <h1>Edição Usuário</h1>
               <form>
-                <span>Nome</span>
+                <span>Descricao</span>
                 <input
-                  name="user"
-                  value={pessoa}
-                  onChange={e => setPessoa(e.target.value)}
+                  name="produto"
+                  value={produto}
+                  onChange={e => setProduto(e.target.value)}
                 />
                 <span>Email</span>
                 <input
