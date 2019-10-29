@@ -16,7 +16,7 @@ export default function Users() {
   const [id, setId] = useState();
   const [newProduto, setNewProduto] = useState();
   const [newValor, setNewValor] = useState();
-  const [email, setEmail] = useState();
+  const [valor, setValor] = useState();
   const idApi = "136dQL3_-dggsQHFvnwYWuaNbAxpH1tB6j9LJ0WLFcTg";
   const type = "api";
 
@@ -34,7 +34,7 @@ export default function Users() {
   async function handleSubmit(e) {
     e.preventDefault();
     await api.post(`${type}?spreadsheetId=${idApi}`, {
-      nome: newProduto,
+      descricao: newProduto,
       valor: newValor
     });
     toast.success("Pesosa criada com sucesso!");
@@ -58,13 +58,13 @@ export default function Users() {
   function handleEdit({ rowIndex, nome, email }) {
     setProduto(nome);
     setId(rowIndex);
-    setEmail(email);
+    setValor(email);
     setIsModalOpen(true);
   }
   async function handleSendEdit(){
     await api.put(`${type}/${id}?spreadsheetId=${idApi}`, {
-      nome: produto,
-      email: email
+      descricao: produto,
+      valor: valor
     });
     toast.success("Pessoa alterada com sucesso!");
     setIsModalOpen(!isModalOpen);
@@ -86,24 +86,23 @@ export default function Users() {
           />
           <input
             value={newValor}
-            type="email"
+            type="text"
             onChange={e => setNewValor(e.target.value)}
-            placeholder="email@example.com"
           />
           <button onClick={ e => handleSubmit(e)}>Salvar</button>
         </form>
         <ul>
           {produtos &&
-            produtos.map((pessoa, key) => (
+            produtos.map((produto, key) => (
               <Pessoa key={key}>
-                <strong>{pessoa.nome}</strong>
-                <strong>{pessoa.email}</strong>
+                <strong>{produto.descricao}</strong>
+                <strong>{produto.valor}</strong>
                 <strong>
                   <ButtonIcon>
-                    <MdModeEdit size={20} onClick={() => handleEdit(pessoa)} />
+                    <MdModeEdit size={20} onClick={() => handleEdit(valor)} />
                   </ButtonIcon>
                   <ButtonIcon>
-                    <MdDelete size={20} onClick={() => handleDelete(pessoa.rowIndex)} />
+                    <MdDelete size={20} onClick={() => handleDelete(produto.rowIndex)} />
                   </ButtonIcon>
                 </strong>
               </Pessoa>
@@ -122,9 +121,9 @@ export default function Users() {
                 />
                 <span>Email</span>
                 <input
-                  name="user"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
+                  name="produto"
+                  value={valor}
+                  onChange={e => setValor(e.target.value)}
                 />
                 <Button onClick={handleSendEdit} size="big" type="submit">
                   Salvar
