@@ -10,9 +10,9 @@ import { api } from "../../services/api";
 import { Container, Pessoa, ButtonIcon } from "./styles";
 
 export default function Users() {
-  const [pessoa, setPessoas] = useState();
+  const [pessoas, setPessoas] = useState();
+  const [pessoa, setPessoa] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pessoa, setPessoas] = useState();
   const [id, setId] = useState();
   const [newPessoa, setNewPessoa] = useState();
   const [newEmail, setNewEmail] = useState();
@@ -20,55 +20,55 @@ export default function Users() {
   const idApi = "";
   const type = "";
 
-  async function getUsers() {
+  async function getPessoas() {
     const response = await api.get(`${type}?spreadsheetId=${idApi}`);
     const { results } = response.data;
     if (results) {
-      setUsers(results);
+      setPessoas(results);
     }
   }
   useEffect(() => {
-    getUsers();
+    getPessoas();
   }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
     await api.post(`${type}?spreadsheetId=${idApi}`, {
-      nome: newUser,
+      nome: newPessoa,
       email: newEmail
     });
     toast.success("Pesosa criada com sucesso!");
-    getUsers();
+    getPessoas();
     setNewEmail('');
-    setNewUser('');
+    setNewPessoa('');
   }
 
-  function removeUser(id) {
-    const usersFilter = users.filter(value => {
+  function removePessoa(id) {
+    const usersFilter = pessoas.filter(value => {
       return value.rowIndex !== id;
     });
-    setUsers(usersFilter);
+    setPessoas(usersFilter);
   }
   function handleDelete(rowIndex) {
-    removeUser(rowIndex);
+    removePessoa(rowIndex);
     toast.success("Pessoa removida com sucesso!");
     api.delete(`${type}/${rowIndex}?spreadsheetId=${idApi}`);
   }
 
   function handleEdit({ rowIndex, nome, email }) {
-    setUser(nome);
+    setPessoa(nome);
     setId(rowIndex);
     setEmail(email);
     setIsModalOpen(true);
   }
   async function handleSendEdit(){
     await api.put(`${type}/${id}?spreadsheetId=${idApi}`, {
-      nome: user,
+      nome: pessoa,
       email: email
     });
     toast.success("Pessoa alterada com sucesso!");
     setIsModalOpen(!isModalOpen);
-    getUsers();
+    getPessoas();
   } 
   function handleModal(){
     setIsModalOpen(!isModalOpen);
@@ -100,10 +100,10 @@ export default function Users() {
                 <strong>{pessoa.email}</strong>
                 <strong>
                   <ButtonIcon>
-                    <MdModeEdit size={20} onClick={() => handleEdit(user)} />
+                    <MdModeEdit size={20} onClick={() => handleEdit(pessoa)} />
                   </ButtonIcon>
                   <ButtonIcon>
-                    <MdDelete size={20} onClick={() => handleDelete(user.rowIndex)} />
+                    <MdDelete size={20} onClick={() => handleDelete(pessoa.rowIndex)} />
                   </ButtonIcon>
                 </strong>
               </Pessoa>
@@ -118,7 +118,7 @@ export default function Users() {
                 <input
                   name="user"
                   value={pessoa}
-                  onChange={e => setUser(e.target.value)}
+                  onChange={e => setPessoa(e.target.value)}
                 />
                 <span>Email</span>
                 <input
