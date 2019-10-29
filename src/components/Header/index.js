@@ -7,7 +7,7 @@ export default function Header() {
     <Container>
       <Content>
         <nav>
-          <Link to="/users">Usuários</Link>
+          <Link to="/">Produtos</Link>
         </nav>
       </Content>
     </Container>

@@ -55,10 +55,10 @@ export default function Users() {
     api.delete(`${type}/${rowIndex}?spreadsheetId=${idApi}`);
   }
 
-  function handleEdit({ rowIndex, nome, email }) {
-    setProduto(nome);
+  function handleEdit({ rowIndex, descricao, valor }) {
+    setProduto(descricao);
     setId(rowIndex);
-    setValor(email);
+    setValor(valor);
     setIsModalOpen(true);
   }
   async function handleSendEdit(){
@@ -99,7 +99,7 @@ export default function Users() {
                 <strong>{produto.valor}</strong>
                 <strong>
                   <ButtonIcon>
-                    <MdModeEdit size={20} onClick={() => handleEdit(valor)} />
+                    <MdModeEdit size={20} onClick={() => handleEdit(produto)} />
                   </ButtonIcon>
                   <ButtonIcon>
                     <MdDelete size={20} onClick={() => handleDelete(produto.rowIndex)} />
@@ -111,17 +111,17 @@ export default function Users() {
           {isModalOpen && (
             
             <Modal size="big">
-              <h1>Edição Usuário</h1>
+              <h1>Edição de Produto</h1>
               <form>
                 <span>Descricao</span>
                 <input
-                  name="produto"
+                  name="descricao"
                   value={produto}
                   onChange={e => setProduto(e.target.value)}
                 />
-                <span>Email</span>
+                <span>Valor</span>
                 <input
-                  name="produto"
+                  name="valor"
                   value={valor}
                   onChange={e => setValor(e.target.value)}
                 />
