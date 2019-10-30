@@ -29,7 +29,7 @@ export const Content = styled.div`
         flex-direction: column;
         align-items: stretch;
         > span{
-            color: #b9bbbe;
+            color: #0000;
             font-size: 14px;
             line-height: 16px;
             font-weight: 600;
@@ -46,7 +46,7 @@ export const Content = styled.div`
             transition: border 0.15s ease;
             font-size: 16px;
             &:focus{
-                border-color: #7289da;
+                border-color: #004870;
             }
         }
         > button{

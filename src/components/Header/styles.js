@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    background: #e60000;
+    background: #004870;
     padding: 0 30px;
 `;
 export const Content = styled.div`
@@ -16,7 +16,7 @@ export const Content = styled.div`
         img{
             margin-right: 20px;
             padding-right: 20px;
-            border-right: 1px solid #eee;
+            border-right: 1px solid #ed00e1;
             width: 70px;
             height: 50px;
         }

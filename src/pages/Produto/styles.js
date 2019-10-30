@@ -40,7 +40,7 @@ export const Produto = styled.li`
   justify-content: space-between;
   align-items: center;
   strong {
-    color: #999;
+    color: #000;
     font-size: 16px;
     font-weight: normal;
   }
